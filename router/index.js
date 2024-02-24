@@ -1,18 +1,8 @@
 const Router = require("@koa/router");
 const router = new Router();
 
-class User {
-  async getName(ctx) {
-    ctx.body = {
-      code: 200,
-      message: "xixji",
-      type: "waring",
-    };
-  }
-}
+const UserController = require("../controller/userController");
 
-const djj = new User();
-
-router.get("/register", djj.getName);
+router.post("/register", UserController.register);
 
 module.exports = router;
