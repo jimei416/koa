@@ -1,6 +1,9 @@
 const Koa = require("koa");
 const bodyParser = require("koa-bodyparser");
 const router = require("./router/index");
+const config = require("./config/index");
+const koajwt = require("koa-jwt");
+const cors = require("koa2-cors");
 
 const app = new Koa();
 
@@ -18,6 +21,24 @@ app.use((ctx, next) => {
     }
   });
 });
+
+// 跨域
+app.use(
+  cors({
+    origin: "*",
+    maxAge: 5,
+    credentials: true,
+  })
+);
+
+// jwt
+app.use(
+  koajwt({
+    secret: config.jwt.SECRET,
+  }).unless({
+    path: [/register/, /login/],
+  })
+);
 
 app.use(bodyParser());
 app.use(router.routes());

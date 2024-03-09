@@ -1,5 +1,9 @@
 const query = require("../sql/query");
 class UserModel {
+  //获取用户信息
+  async getAllUser(id) {
+    return await query(`SELECT * FROM user WHERE id = '${id}'`);
+  }
   //获取用户
   async getUser(name) {
     return await query(`SELECT * FROM user WHERE name = '${name}'`);
